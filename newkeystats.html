@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+h2   {color: black; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+p    {color: black; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 15px;}
+body {background-color: powderblue;}
+* {
+  box-sizing: border-box;
+}
+
+/* Create four equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+  height: 120px; /* Should be removed. Only for demonstration */
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align: center; font: larger; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: xx-large;">Market Summary: {{ ticker }}</h2>
+
+<div class="row">
+    <div class="column" style="background-color:#4CAF50; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-left: 25%; text-align: center;">
+      <h2>Current Price: </h2>
+      <p>{{ quote['05. price']+'$' }}</p>
+    </div>
+    <div class="column" style="background-color:#4CAF50;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;text-align: center;">
+      <h2>Today's Change: </h2>
+      <p>{{ quote['09. change']+'%' }}</p>
+    </div>
+  </div>
+
+<div class="row">
+  <div class="column" style="background-color:#4CAF50; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: small;text-align: center;">
+    <h2>52 Week High</h2>
+    <p>{{ keystats['52WeekHigh'] }}</p>
+  </div>
+  <div class="column" style="background-color:#4CAF50;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: small;">
+    <h2>52 Week Low</h2>
+    <p>{{ keystats['52WeekLow'] }}</p>
+  </div>
+  <div class="column" style="background-color:#4CAF50;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: small;">
+    <h2>Dividend Date</h2>
+    <p>{{ keystats['DividendDate'] }}</p>
+  </div>
+  <div class="column" style="background-color:#4CAF50;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: small;">
+    <h2>Last Quarter Operating Cash Flow</h2>
+    <p>{{ cashflow }}</p>
+  </div>
+</div>
+
+<div style="text-align:center">
+    <form action="/csv" method="POST">
+        <input type="submit" value="Download CSV File" style="background-color: #4CAF50;margin-top: 50%; color: whitesmoke; border: none; cursor: pointer; margin: 4px 2px; padding: 16px 32px; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: large;">
+        <input type="hidden" name="{{ ticker }}">
+    </form>
+</div>
+
+</body>
+</html>
+
