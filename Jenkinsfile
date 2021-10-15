@@ -26,7 +26,7 @@ pipeline {
 
       stage('Deploy to cluster using Helm'){
          steps {
-           sh 'sudo helm install stocks /stocksApp/stocksPackage/ --kubeconfig /etc/rancher/k3s/k3s.yaml'
+           sh 'sudo helm install stocks /stocksApp/stocksPackage/ --kubeconfig /etc/rancher/k3s/k3s.yaml -S'
          }
       }
    }
