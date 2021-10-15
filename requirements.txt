@@ -1,1 +1,6 @@
-flask==0.10.1
+Flask==2.0.1
+Jinja2==3.0.1
+requests==2.22.0
+requests-unixsocket==0.2.0
+virtualenv==20.6.0
+Werkzeug==2.0.1
