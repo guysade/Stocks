@@ -17,22 +17,16 @@ pipeline {
             git credentialsId: 'GitHub', url: "https://github.com/guysade/stocks.git"
          }
       }
-      stage('Build') {
-         steps {
-            sh '''mvn clean package'''
-         }
-      }
-
+      
       stage('Build and Push Image') {
          steps {
            sh 'docker image build -t ${REPOSITORY_TAG} .'
          }
       }
-
-      stage('Deploy to Cluster') {
-          steps {
-                    sh 'envsubst < ${WORKSPACE}/deploy.yaml | kubectl apply -f -'
-          }
+      stage('Deploy to cluster using Helm')
+         steps {
+           sh 'helm install /stocksApp/stocksPackage/templates/deployment.yaml'
+         }
       }
    }
 }
