@@ -7,7 +7,7 @@ pipeline {
      // YOUR_DOCKERHUB_USERNAME (it doesn't matter if you don't have one)
 
      SERVICE_NAME = "stocks-app"
-     REPOSITORY_TAG="${YOUR_DOCKERHUB_USERNAME}/-${SERVICE_NAME}:${BUILD_ID}"
+     REPOSITORY_TAG="${YOUR_DOCKERHUB_USERNAME}/${SERVICE_NAME}:${BUILD_ID}"
    }
 
    stages {
@@ -20,7 +20,7 @@ pipeline {
       
       stage('Build and Push Image') {
          steps {
-           sh 'docker image build -t ${REPOSITORY_TAG} .'
+           sh 'docker image build --tag ${REPOSITORY_TAG} .'
          }
       }
 
