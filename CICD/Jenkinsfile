@@ -1,36 +1,38 @@
-/* groovylint-disable CompileStatic, NestedBlockDepth */
 pipeline {
-  agent any
+   agent any
 
-  stages {
-    stage('Checkout Source') {
-      steps {
-        git url:'https://github.com/guysade/Stocks.git', branch:'master'
+   environment {
+     // You must set the following environment variables
+     // ORGANIZATION_NAME
+     // YOUR_DOCKERHUB_USERNAME (it doesn't matter if you don't have one)
+
+     SERVICE_NAME = "fleetman-api-gateway"
+     REPOSITORY_TAG="${YOUR_DOCKERHUB_USERNAME}/${ORGANIZATION_NAME}-${SERVICE_NAME}:${BUILD_ID}"
+   }
+
+   stages {
+      stage('Preparation') {
+         steps {
+            cleanWs()
+            git credentialsId: 'GitHub', url: "https://github.com/${ORGANIZATION_NAME}/${SERVICE_NAME}"
+         }
       }
-    }
-      stage('Build image') {
-            steps {
-                script {
-                    myapp = docker.build("guysade4/stocks:${env.BUILD_ID}")
-                }
-            }
-        }
-      stage('Push image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            myapp.push('latest')
-                            myapp.push("${env.BUILD_ID}")
-                    }
-                }
-            }
-        }
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: 'hellowhale.yml', kubeconfigId: 'mykubeconfig')
-        }
+      stage('Build') {
+         steps {
+            sh '''mvn clean package'''
+         }
       }
-    }
-  }
+
+      stage('Build and Push Image') {
+         steps {
+           sh 'docker image build -t ${REPOSITORY_TAG} .'
+         }
+      }
+
+      stage('Deploy to Cluster') {
+          steps {
+                    sh 'envsubst < ${WORKSPACE}/deploy.yaml | kubectl apply -f -'
+          }
+      }
+   }
 }
