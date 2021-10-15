@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: stocks-app
-          image: guysade4/stocks
-          imagePullPolicy: Never
+          image: guysade4/stocks:2.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
 
