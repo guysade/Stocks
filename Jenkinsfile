@@ -1,5 +1,5 @@
 pipeline {
-   agent any
+   agent { label 'ubuntu-agent1' }
 
    environment {
      // You must set the following environment variables
