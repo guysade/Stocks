@@ -1,5 +1,5 @@
 pipeline {
-   agent ubuntu-agent1
+   agent any
 
    environment {
      // You must set the following environment variables
