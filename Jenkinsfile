@@ -23,10 +23,12 @@ pipeline {
            sh 'docker image build -t ${REPOSITORY_TAG} .'
          }
       }
-      stage('Deploy to cluster using Helm')
+
+      stage('Deploy to cluster using Helm'){
          steps {
            sh 'helm install /stocksApp/stocksPackage/templates/deployment.yaml'
          }
       }
    }
+}
 
