@@ -26,7 +26,7 @@ pipeline {
 
       stage('Deploy to cluster using Helm'){
          steps {
-           sh 'helm install stocks /stocksApp/stocksPackage/templates/deployment.yaml'
+           sh 'helm install stocks /stocksApp/stocksPackage/'
          }
       }
    }
