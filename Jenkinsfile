@@ -20,7 +20,7 @@ pipeline {
       
       stage('Build and Push Image') {
          steps {
-           sh 'docker image build --tag ${REPOSITORY_TAG} . && docker push'
+           sh 'docker image build --tag ${REPOSITORY_TAG} . && docker push ${YOUR_DOCKERHUB_USERNAME}/${SERVICE_NAME}:${BUILD_ID}'
          }
       }
 
