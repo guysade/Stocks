@@ -49,4 +49,4 @@ def error():
     return flask.render_template('404.html') 
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0',port='8080')
+    app.run(debug=True,host='0.0.0.0')
